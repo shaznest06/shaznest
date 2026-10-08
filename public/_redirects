@@ -1,0 +1,2 @@
+# Product detail pages: /products/<slug> is rendered by product.html
+/products/*  /product.html  200

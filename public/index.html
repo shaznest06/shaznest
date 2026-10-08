@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ShaZ Nest | Premium Hijabs &amp; Accessories</title>
+<meta name="description" content="Shop premium hijabs and elegant accessories from ShaZ Nest — From Our Nest To Yours.">
+<link rel="canonical" href="https://shaznest.com/">
+<meta name="theme-color" content="#f5efe4">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ShaZ Nest">
+<meta property="og:title" content="ShaZ Nest | Premium Hijabs &amp; Accessories">
+<meta property="og:description" content="Shop premium hijabs and elegant accessories from ShaZ Nest — From Our Nest To Yours.">
+<meta property="og:url" content="https://shaznest.com/">
+<meta property="og:image" content="https://shaznest.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ShaZ Nest — From Our Nest To Yours">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ShaZ Nest | Premium Hijabs &amp; Accessories">
+<meta name="twitter:description" content="Shop premium hijabs and elegant accessories from ShaZ Nest — From Our Nest To Yours.">
+<meta name="twitter:image" content="https://shaznest.com/assets/img/og-image.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"ShaZ Nest","slogan":"From Our Nest To Yours","url":"https://shaznest.com/","logo":"https://shaznest.com/apple-touch-icon.png","sameAs":["https://www.instagram.com/shaz.nest/"]}
+</script>
+<script type="module" src="/assets/js/pages/home.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="/" aria-label="ShaZ Nest home">ShaZ <em>Nest</em></a>
+    <nav class="site-nav" aria-label="Main">
+      <a class="hide-sm" href="/?category=hijabs#shop">Hijabs</a>
+      <a class="hide-sm" href="/?category=accessories#shop">Accessories</a>
+      <a href="#track">Track order</a>
+      <button type="button" class="cart-btn" data-open-cart aria-label="Open cart">Cart <span class="cart-btn__count" data-cart-count>0</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="container hero" aria-labelledby="hero-title">
+    <div>
+      <p class="eyebrow">Hijabs &amp; Accessories</p>
+      <h1 class="hero__title" id="hero-title">From Our Nest <em>To Yours</em></h1>
+      <p class="hero__lede">Premium hijabs and elegant accessories from ShaZ Nest.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#shop">Shop the collection</a>
+        <a class="btn btn--ghost" href="https://www.instagram.com/shaz.nest/" target="_blank" rel="noopener">Follow @shaz.nest</a>
+      </div>
+    </div>
+    <div class="hero__panel" aria-hidden="true">
+      <span class="hero__monogram">SN</span>
+      <span class="hero__caption">shaznest.com</span>
+    </div>
+  </section>
+
+  <section class="container section section--rule" aria-labelledby="categories-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">Categories</p>
+        <h2 class="section-title" id="categories-title">Shop by category</h2>
+      </div>
+    </div>
+    <div class="categories">
+      <a class="category-tile category-tile--hijabs" href="/?category=hijabs#shop" data-category-link="hijabs">
+        <span class="eyebrow">01</span>
+        <span>
+          <span class="category-tile__name">Hijabs</span><br>
+          <span class="category-tile__cta">Shop hijabs</span>
+        </span>
+      </a>
+      <a class="category-tile category-tile--accessories" href="/?category=accessories#shop" data-category-link="accessories">
+        <span class="eyebrow">02</span>
+        <span>
+          <span class="category-tile__name">Accessories</span><br>
+          <span class="category-tile__cta">Shop accessories</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section class="container section section--rule" id="featured" aria-labelledby="featured-title" hidden>
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">Selected</p>
+        <h2 class="section-title" id="featured-title">Featured pieces</h2>
+      </div>
+    </div>
+    <div id="featured-root"></div>
+  </section>
+
+  <section class="container section section--rule" id="shop" aria-labelledby="shop-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">Shop</p>
+        <h2 class="section-title" id="shop-title">The collection</h2>
+      </div>
+      <div class="filters" id="shop-filters" role="group" aria-label="Filter by category">
+        <button type="button" class="filter" data-category="" aria-pressed="true">All</button>
+        <button type="button" class="filter" data-category="hijabs" aria-pressed="false">Hijabs</button>
+        <button type="button" class="filter" data-category="accessories" aria-pressed="false">Accessories</button>
+      </div>
+    </div>
+    <div id="shop-root" aria-live="polite"></div>
+  </section>
+
+  <section class="band section" aria-labelledby="ig-title">
+    <div class="container">
+      <p class="eyebrow">Instagram</p>
+      <h2 class="band__title" id="ig-title">Follow along at <em>@shaz.nest</em></h2>
+      <a class="btn btn--light" href="https://www.instagram.com/shaz.nest/" target="_blank" rel="noopener">Visit Instagram</a>
+    </div>
+  </section>
+
+  <section class="container section" id="track" aria-labelledby="track-title">
+    <div class="tracking-layout">
+      <div>
+        <p class="eyebrow">Orders</p>
+        <h2 class="section-title" id="track-title">Track your order</h2>
+        <p class="note" style="margin-top:16px;max-width:26rem">Enter the order number from your order confirmation.</p>
+      </div>
+      <div id="tracking-root"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div>
+      <a class="wordmark" href="/">ShaZ <em>Nest</em></a>
+      <p class="site-footer__tagline">From Our Nest To Yours</p>
+    </div>
+    <div style="display:grid;gap:14px">
+      <nav aria-label="Footer">
+        <a href="/?category=hijabs#shop">Hijabs</a>
+        <a href="/?category=accessories#shop">Accessories</a>
+        <a href="#track">Track order</a>
+        <a href="https://www.instagram.com/shaz.nest/" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <small>© <span id="year">2026</span> ShaZ Nest · shaznest.com</small>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
