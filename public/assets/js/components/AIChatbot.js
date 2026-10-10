@@ -7,9 +7,9 @@ export function AIChatbot() {
         position: fixed;
         bottom: 2rem;
         right: 2rem;
-        background: #1a120f;
-        color: #d4af37;
-        border: 1px solid #d4af37;
+        background: var(--espresso);
+        color: var(--champagne);
+        border: 1px solid var(--champagne);
         padding: 0.8rem 1.2rem;
         border-radius: 30px;
         cursor: pointer;
@@ -23,8 +23,8 @@ export function AIChatbot() {
         transition: all 0.3s ease;
       }
       .shaz-ai-trigger:hover {
-        background: #d4af37;
-        color: #0d0d0d;
+        background: var(--champagne);
+        color: var(--espresso);
       }
       .shaz-ai-modal {
         position: fixed;
@@ -33,8 +33,8 @@ export function AIChatbot() {
         width: 360px;
         max-width: 90vw;
         height: 480px;
-        background: #0d0d0d;
-        border: 1px solid #1a120f;
+        background: var(--paper);
+        border: 1px solid var(--espresso);
         border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         display: flex;
@@ -42,29 +42,29 @@ export function AIChatbot() {
         z-index: 10000;
         display: none;
         overflow: hidden;
-        color: #f3f3f3;
+        color: var(--espresso);
         font-family: inherit;
       }
       .shaz-ai-modal.open {
         display: flex;
       }
       .shaz-ai-header {
-        background: #1a120f;
+        background: var(--espresso);
         padding: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #33221a;
+        border-bottom: 1px solid var(--line);
       }
       .shaz-ai-header h3 {
         margin: 0;
         font-size: 1rem;
-        color: #d4af37;
+        color: var(--champagne);
       }
       .shaz-ai-close {
         background: none;
         border: none;
-        color: #d4af37;
+        color: var(--champagne);
         font-size: 1.2rem;
         cursor: pointer;
       }
@@ -84,34 +84,35 @@ export function AIChatbot() {
         line-height: 1.4;
       }
       .shaz-msg.bot {
-        background: #1a120f;
+        background: var(--ivory-deep);
+        color: var(--espresso);
         align-self: flex-start;
-        border-left: 2px solid #d4af37;
+        border-left: 2px solid var(--champagne);
       }
       .shaz-msg.user {
-        background: #d4af37;
-        color: #0d0d0d;
+        background: var(--champagne);
+        color: var(--espresso);
         align-self: flex-end;
       }
       .shaz-ai-input-area {
         padding: 0.8rem;
-        background: #1a120f;
+        background: var(--espresso);
         display: flex;
         gap: 0.5rem;
-        border-top: 1px solid #33221a;
+        border-top: 1px solid var(--line);
       }
       .shaz-ai-input-area input {
         flex: 1;
-        background: #0d0d0d;
-        border: 1px solid #33221a;
+        background: var(--paper);
+        border: 1px solid var(--line);
         padding: 0.6rem;
-        color: #fff;
+        color: var(--espresso);
         border-radius: 6px;
         outline: none;
       }
       .shaz-ai-input-area button {
-        background: #d4af37;
-        color: #0d0d0d;
+        background: var(--champagne);
+        color: var(--espresso);
         border: none;
         padding: 0 1rem;
         border-radius: 6px;

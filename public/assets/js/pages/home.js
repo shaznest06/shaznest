@@ -28,8 +28,21 @@ const emptyMessage = (category) => {
     <p>Follow <a href="${CONFIG.instagram.url}" target="_blank" rel="noopener">${CONFIG.instagram.handle}</a> on Instagram to see new pieces first.</p>`;
 };
 
-let activeCategory = new URLSearchParams(location.search).get("category");
-if (!CATEGORIES.some((c) => c.slug === activeCategory)) activeCategory = null;
+// Category can come from /?category=hijabs or from #/shop?category=hijabs.
+function categoryFromLocation() {
+  const fromHash = new URLSearchParams(location.hash.split("?")[1] || "").get("category");
+  const value = fromHash || new URLSearchParams(location.search).get("category");
+  return CATEGORIES.some((c) => c.slug === value) ? value : null;
+}
+let activeCategory = categoryFromLocation();
+
+// The router announces category changes when #/shop?category=... links are used.
+window.addEventListener("shaz:filter-category", (e) => {
+  const next = CATEGORIES.some((c) => c.slug === e.detail.category) ? e.detail.category : null;
+  if (next === activeCategory) return;
+  activeCategory = next;
+  renderShop();
+});
 
 function renderFilters() {
   filters.querySelectorAll("[data-category]").forEach((b) => {

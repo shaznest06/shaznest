@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Champagne Silk Shimmer Hijab</title>
+  <desc id="desc">Illustrated champagne silk shimmer hijab with a fine gold border.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#2a2117"/><stop offset="1" stop-color="#16110b"/></linearGradient>
+    <linearGradient id="velvet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ebdcb6"/><stop offset=".3" stop-color="#c7a875"/><stop offset=".68" stop-color="#8f7440"/><stop offset="1" stop-color="#d9c18d"/></linearGradient>
+    <linearGradient id="edge" x2="1"><stop stop-color="#94713a"/><stop offset=".5" stop-color="#edd28b"/><stop offset="1" stop-color="#93703a"/></linearGradient>
+    <radialGradient id="shine"><stop stop-color="#fff1cf" stop-opacity=".22"/><stop offset="1" stop-color="#fff1cf" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="380" cy="430" r="370" fill="url(#shine)"/>
+  <path d="M133 259 337 112l262 48 88 184-81 500-207 71-235-108-63-347z" fill="url(#velvet)" stroke="url(#edge)" stroke-width="5"/>
+  <path d="m337 112 62 300-174 395m374-647L399 412l206 427M337 112l62 300 200-252M164 807l235 105 206-73" fill="none" stroke="#fff6df" stroke-opacity=".28" stroke-width="4"/>
+  <path d="M182 280c118-97 231-140 384-96M144 382c145-117 301-165 484-123M138 625c170-111 314-170 483-202" fill="none" stroke="#f6e8c4" stroke-opacity=".1" stroke-width="2"/>
+  <rect x="28" y="28" width="744" height="944" fill="none" stroke="#d4af37" stroke-opacity=".45"/>
+  <text x="52" y="924" fill="#e3d9bd" font-family="Georgia,serif" font-size="24" letter-spacing="4">OCCASION VELVET · EMERALD</text>
+</svg>

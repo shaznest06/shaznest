@@ -1,45 +1,57 @@
-import { renderHome } from './pages/home.js';
-import { renderProduct } from './pages/product.js';
-import { CustomerPortal } from './components/CustomerPortal.js';
-import { AdminPortal } from './components/AdminPortal.js';
-import { Checkout } from './components/Checkout.js';
-import { ReviewGallery } from './components/ReviewGallery.js';
+// Hash router for the single-page storefront (index.html).
+// The page already contains every view; this only shows the right one.
+const VIEWS = {
+  account: "view-account",
+  checkout: "view-checkout",
+  reviews: "view-reviews",
+  "admin-portal": "view-admin",
+  "admin-login": "view-admin",
+  admin: "view-admin",
+};
+const HOME = "view-home";
+const SCROLL_TARGETS = { shop: "shop", track: "track" };
+const CATEGORIES = ["hijabs", "accessories"];
 
-export function initRouter() {
-  const handleRoute = async () => {
-    const hash = window.location.hash || '#/';
-    const mainContainer = document.querySelector('main') || document.body;
-    
-    // Clear previous view
-    mainContainer.innerHTML = '';
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (hash === '#/' || hash === '') {
-      mainContainer.appendChild(renderHome());
-    } else if (hash.startsWith('#/shop/')) {
-      const category = hash.split('/')[2];
-      const homeEl = renderHome();
-      mainContainer.appendChild(homeEl);
-      // Trigger category filter if available on page
-      window.dispatchEvent(new CustomEvent('shaz:filter-category', { detail: { category } }));
-    } else if (hash.startsWith('#/product/')) {
-      const productId = hash.split('/')[2];
-      mainContainer.appendChild(renderProduct(productId));
-    } else if (hash === '#/account') {
-      mainContainer.appendChild(CustomerPortal());
-    } else if (hash === '#/admin' || hash === '#/admin-portal') {
-      mainContainer.appendChild(AdminPortal());
-    } else if (hash === '#/checkout') {
-      mainContainer.appendChild(Checkout());
-    } else if (hash === '#/reviews') {
-      mainContainer.appendChild(ReviewGallery());
-    } else {
-      mainContainer.innerHTML = '<div style="padding: 4rem; text-align: center; color: #d4af37;"><h2>Page Not Found</h2><p>The requested page does not exist in ShaZ Nest.</p><a href="#/" style="color: #fff; text-decoration: underline;">Return Home</a></div>';
-    }
-
-    window.scrollTo(0, 0);
-  };
-
-  window.addEventListener('hashchange', handleRoute);
-  window.addEventListener('DOMContentLoaded', handleRoute);
-  handleRoute();
+function parseHash() {
+  const raw = location.hash.replace(/^#\/?/, "");
+  const [path, query = ""] = raw.split("?");
+  return { path, params: new URLSearchParams(query) };
 }
+
+function showView(id) {
+  document.querySelectorAll("[data-route-view]").forEach((view) => {
+    const active = view.id === id;
+    view.hidden = !active;
+    view.setAttribute("aria-hidden", String(!active));
+    view.classList.toggle("is-active", active);
+  });
+}
+
+function handleRoute() {
+  const { path, params } = parseHash();
+  const viewId = VIEWS[path] || HOME;
+  showView(viewId);
+
+  if (viewId !== HOME) {
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  const category = params.get("category");
+  window.dispatchEvent(new CustomEvent("shaz:filter-category", {
+    detail: { category: CATEGORIES.includes(category) ? category : null },
+  }));
+
+  const target = SCROLL_TARGETS[path];
+  if (target) {
+    document.getElementById(target)?.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth" });
+  } else if (!path || path === "") {
+    // "#/" or empty hash: top of the page. Plain in-page anchors (#shop, #track) scroll natively.
+    if (location.hash === "#/" || location.hash === "") window.scrollTo(0, 0);
+  }
+}
+
+window.addEventListener("hashchange", handleRoute);
+handleRoute();

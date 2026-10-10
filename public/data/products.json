@@ -1,32 +1,77 @@
 [
   {
     "id": "shaz-01",
-    "title": "Midnight Onyx Pure Silk Hijab",
-    "price": 1299,
-    "compare_at_price": 1699,
+    "name": "Midnight Onyx Pure Silk Hijab",
+    "slug": "midnight-onyx-pure-silk-hijab",
     "category": "hijabs",
+    "description": "Luxurious lightweight pure silk hijab in deep midnight onyx.",
+    "price": 1299,
+    "compareAtPrice": 1699,
+    "availableColours": [
+      {
+        "name": "Midnight Onyx",
+        "hex": "#17161b"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/midnight-onyx-silk-hijab.svg",
+        "alt": "Illustrated Midnight Onyx Pure Silk Hijab",
+        "colour": "Midnight Onyx"
+      }
+    ],
     "stock": 15,
-    "images": ["/assets/img/products/midnight-onyx-silk-hijab.svg"],
-    "description": "Luxurious lightweight pure silk hijab in deep midnight onyx."
+    "featured": true,
+    "active": true
   },
   {
     "id": "shaz-02",
-    "title": "Emerald Velvet Occasion Hijab",
-    "price": 1499,
-    "compare_at_price": 1899,
+    "name": "Emerald Velvet Occasion Hijab",
+    "slug": "emerald-velvet-occasion-hijab",
     "category": "hijabs",
+    "description": "Rich emerald velvet finish, perfect for evening wear and special occasions.",
+    "price": 1499,
+    "compareAtPrice": 1899,
+    "availableColours": [
+      {
+        "name": "Emerald Velvet",
+        "hex": "#18523a"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/emerald-velvet-occasion-hijab.svg",
+        "alt": "Illustrated Emerald Velvet Occasion Hijab",
+        "colour": "Emerald Velvet"
+      }
+    ],
     "stock": 12,
-    "images": ["/assets/img/products/emerald-velvet-occasion-hijab.svg"],
-    "description": "Rich emerald velvet finish, perfect for evening wear and special occasions."
+    "featured": false,
+    "active": true
   },
   {
     "id": "shaz-03",
-    "title": "Champagne Silk Shimmer Hijab",
-    "price": 1399,
-    "compare_at_price": 1799,
+    "name": "Champagne Silk Shimmer Hijab",
+    "slug": "champagne-silk-shimmer-hijab",
     "category": "hijabs",
+    "description": "Subtle shimmering champagne pure silk hijab designed for refined elegance.",
+    "price": 1399,
+    "compareAtPrice": 1799,
+    "availableColours": [
+      {
+        "name": "Champagne",
+        "hex": "#c7a875"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/champagne-silk-shimmer-hijab.svg",
+        "alt": "Illustrated Champagne Silk Shimmer Hijab",
+        "colour": "Champagne"
+      }
+    ],
     "stock": 10,
-    "images": ["/assets/img/og-image.png"],
-    "description": "Subtle shimmering champagne pure silk hijab designed for refined elegance."
+    "featured": false,
+    "active": true
   }
 ]

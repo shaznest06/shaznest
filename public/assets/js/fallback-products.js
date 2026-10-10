@@ -1,45 +1,78 @@
-// Bundled display fallback; keep aligned with public/data/products.json.
+// Bundled display fallback; generated from public/data/products.json. Keep them identical.
 export const FALLBACK_PRODUCTS = [
   {
-    id: "sample-midnight-onyx-silk-hijab",
-    name: "Midnight Onyx Pure Silk Hijab",
-    slug: "midnight-onyx-pure-silk-hijab",
-    category: "hijabs",
-    description: "A sample ShaZ Nest catalogue listing for a fluid pure-silk hijab in deep midnight onyx, finished with a subtle champagne edge.",
-    price: 1899,
-    compareAtPrice: 2299,
-    availableColours: [{ name: "Midnight Onyx", hex: "#17161b" }],
-    images: [{ src: "/assets/img/products/midnight-onyx-silk-hijab.svg", alt: "Illustrated Midnight Onyx Pure Silk Hijab", colour: "Midnight Onyx" }],
-    stock: 8,
-    featured: true,
-    active: true,
+    "id": "shaz-01",
+    "name": "Midnight Onyx Pure Silk Hijab",
+    "slug": "midnight-onyx-pure-silk-hijab",
+    "category": "hijabs",
+    "description": "Luxurious lightweight pure silk hijab in deep midnight onyx.",
+    "price": 1299,
+    "compareAtPrice": 1699,
+    "availableColours": [
+      {
+        "name": "Midnight Onyx",
+        "hex": "#17161b"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/midnight-onyx-silk-hijab.svg",
+        "alt": "Illustrated Midnight Onyx Pure Silk Hijab",
+        "colour": "Midnight Onyx"
+      }
+    ],
+    "stock": 15,
+    "featured": true,
+    "active": true
   },
   {
-    id: "sample-espresso-champagne-luxe-abaya",
-    name: "Espresso Champagne Luxe Abaya",
-    slug: "espresso-champagne-luxe-abaya",
-    category: "accessories",
-    description: "A sample ShaZ Nest catalogue listing for a flowing espresso-toned occasion abaya with refined champagne piping.",
-    price: 4299,
-    compareAtPrice: 4899,
-    availableColours: [{ name: "Espresso Champagne", hex: "#4b3023" }],
-    images: [{ src: "/assets/img/products/espresso-champagne-luxe-abaya.svg", alt: "Illustrated Espresso Champagne Luxe Abaya", colour: "Espresso Champagne" }],
-    stock: 4,
-    featured: true,
-    active: true,
+    "id": "shaz-02",
+    "name": "Emerald Velvet Occasion Hijab",
+    "slug": "emerald-velvet-occasion-hijab",
+    "category": "hijabs",
+    "description": "Rich emerald velvet finish, perfect for evening wear and special occasions.",
+    "price": 1499,
+    "compareAtPrice": 1899,
+    "availableColours": [
+      {
+        "name": "Emerald Velvet",
+        "hex": "#18523a"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/emerald-velvet-occasion-hijab.svg",
+        "alt": "Illustrated Emerald Velvet Occasion Hijab",
+        "colour": "Emerald Velvet"
+      }
+    ],
+    "stock": 12,
+    "featured": false,
+    "active": true
   },
   {
-    id: "sample-emerald-velvet-occasion-hijab",
-    name: "Emerald Velvet Occasion Hijab",
-    slug: "emerald-velvet-occasion-hijab",
-    category: "hijabs",
-    description: "A sample ShaZ Nest catalogue listing for an occasion hijab in jewel-toned emerald velvet with a fine gold border.",
-    price: 899,
-    compareAtPrice: 1299,
-    availableColours: [{ name: "Emerald Velvet", hex: "#18523a" }],
-    images: [{ src: "/assets/img/products/emerald-velvet-occasion-hijab.svg", alt: "Illustrated Emerald Velvet Occasion Hijab", colour: "Emerald Velvet" }],
-    stock: 6,
-    featured: false,
-    active: true,
-  },
+    "id": "shaz-03",
+    "name": "Champagne Silk Shimmer Hijab",
+    "slug": "champagne-silk-shimmer-hijab",
+    "category": "hijabs",
+    "description": "Subtle shimmering champagne pure silk hijab designed for refined elegance.",
+    "price": 1399,
+    "compareAtPrice": 1799,
+    "availableColours": [
+      {
+        "name": "Champagne",
+        "hex": "#c7a875"
+      }
+    ],
+    "images": [
+      {
+        "src": "/assets/img/products/champagne-silk-shimmer-hijab.svg",
+        "alt": "Illustrated Champagne Silk Shimmer Hijab",
+        "colour": "Champagne"
+      }
+    ],
+    "stock": 10,
+    "featured": false,
+    "active": true
+  }
 ];
