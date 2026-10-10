@@ -35,6 +35,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"ShaZ Nest","slogan":"From Our Nest To Yours","url":"https://shaznest.com/","logo":"https://shaznest.com/apple-touch-icon.png","sameAs":["https://www.instagram.com/shaz.nest/"]}
 </script>
+<script type="module" src="/assets/js/router.js"></script>
+<script type="module" src="/assets/js/analytics-ping.js"></script>
 <script type="module" src="/assets/js/pages/home.js"></script>
 </head>
 <body>
@@ -42,17 +44,21 @@
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="wordmark" href="/" aria-label="ShaZ Nest home">ShaZ <em>Nest</em></a>
+    <a class="wordmark" href="#/" aria-label="ShaZ Nest home" data-route-link>ShaZ <em>Nest</em></a>
     <nav class="site-nav" aria-label="Main">
-      <a class="hide-sm" href="/?category=hijabs#shop">Hijabs</a>
-      <a class="hide-sm" href="/?category=accessories#shop">Accessories</a>
-      <a href="#track">Track order</a>
+      <a href="#/shop" data-route-link>Shop</a>
+      <a class="hide-sm" href="#/shop?category=hijabs" data-route-link>Hijabs</a>
+      <a class="hide-sm" href="#/shop?category=accessories" data-route-link>Accessories</a>
+      <a href="#/track" data-route-link>Track order</a>
+      <a href="#/account" data-route-link>Account</a>
+      <a class="hide-sm" href="#/reviews" data-route-link>Reviews</a>
       <button type="button" class="cart-btn" data-open-cart aria-label="Open cart">Cart <span class="cart-btn__count" data-cart-count>0</span></button>
     </nav>
   </div>
 </header>
 
 <main id="main">
+  <section class="route-view is-active" id="view-home" data-route-view aria-hidden="false">
   <section class="container hero" aria-labelledby="hero-title">
     <div>
       <p class="eyebrow">Hijabs &amp; Accessories</p>
@@ -137,12 +143,43 @@
       <div id="tracking-root"></div>
     </div>
   </section>
+  </section>
+
+  <section class="route-view route-view--message" id="view-account" data-route-view aria-labelledby="account-title" aria-hidden="true" hidden>
+    <div class="container section">
+      <p class="eyebrow">Customer</p>
+      <h1 class="section-title" id="account-title">Account</h1>
+      <p class="note">Customer accounts are not available yet.</p>
+    </div>
+  </section>
+  <section class="route-view route-view--message" id="view-admin" data-route-view aria-label="Admin portal" aria-hidden="true" hidden>
+    <div class="container section">
+      <p class="eyebrow">Management</p>
+      <h1 class="section-title" id="admin-title">Admin</h1>
+      <p class="note">The admin dashboard is not available yet.</p>
+    </div>
+  </section>
+  <section class="route-view route-view--message" id="view-checkout" data-route-view aria-labelledby="checkout-title" aria-hidden="true" hidden>
+    <div class="container section">
+      <p class="eyebrow">Your order</p>
+      <h1 class="section-title" id="checkout-title">Checkout</h1>
+      <p class="note">Online checkout is not available yet. Your cart is still available.</p>
+      <button type="button" class="btn btn--primary" data-open-cart>Open cart</button>
+    </div>
+  </section>
+  <section class="route-view route-view--message" id="view-reviews" data-route-view aria-labelledby="reviews-title" aria-hidden="true" hidden>
+    <div class="container section">
+      <p class="eyebrow">Community</p>
+      <h1 class="section-title" id="reviews-title">Reviews</h1>
+      <p class="note">Customer reviews are not available yet.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div>
-      <a class="wordmark" href="/">ShaZ <em>Nest</em></a>
+      <a class="wordmark" href="#/" data-route-link>ShaZ <em>Nest</em></a>
       <p class="site-footer__tagline">From Our Nest To Yours</p>
     </div>
     <div style="display:grid;gap:14px">

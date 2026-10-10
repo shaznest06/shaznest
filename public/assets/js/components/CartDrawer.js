@@ -1,7 +1,6 @@
 import { getCount, getItems, getSubtotal, subscribe } from "../cart.js";
 import { formatPrice, html } from "../utils.js";
 import { CartItem } from "./CartItem.js";
-import { CheckoutForm } from "./CheckoutForm.js";
 
 let drawer = null;
 let lastFocus = null;
@@ -80,8 +79,10 @@ export function mountCartDrawer() {
     panel.querySelector(".drawer__body").scrollTop = 0;
   };
 
-  checkoutView.append(CheckoutForm({ getItems, onBack: () => showView("cart") }));
-  toCheckout.addEventListener("click", () => showView("checkout"));
+  toCheckout.addEventListener("click", () => {
+    window.location.hash = "#/checkout";
+    closeCart();
+  });
 
   root.addEventListener("click", (e) => {
     if (e.target.closest("[data-close]")) closeCart();

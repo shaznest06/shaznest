@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Midnight Onyx Pure Silk Hijab</title>
+  <desc id="desc">Illustrated draped pure silk hijab in deep onyx with a brushed gold edge.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#211b1b"/><stop offset="1" stop-color="#09090b"/></linearGradient>
+    <linearGradient id="silk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#454047"/><stop offset=".38" stop-color="#17161b"/><stop offset=".72" stop-color="#2d2931"/><stop offset="1" stop-color="#0b0b0e"/></linearGradient>
+    <linearGradient id="gold" x2="1"><stop stop-color="#8c6c38"/><stop offset=".5" stop-color="#e4c578"/><stop offset="1" stop-color="#9b7942"/></linearGradient>
+    <pattern id="weave" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 1h9M1 0v9" stroke="#fff" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="610" cy="170" r="180" fill="#c7a875" opacity=".045"/>
+  <path d="M112 234 307 106l278 34 109 204-78 515-194 64-250-96-71-384z" fill="url(#silk)" stroke="url(#gold)" stroke-width="5"/>
+  <path d="m307 106 85 281-191 440m384-687L392 387l224 472M307 106l85 281 193-247M201 827l276 96 139-64" fill="none" stroke="#e5d8c6" stroke-opacity=".19" stroke-width="3"/>
+  <path d="M112 234 307 106l278 34 109 204-78 515-194 64-250-96-71-384z" fill="url(#weave)"/>
+  <rect x="28" y="28" width="744" height="944" fill="none" stroke="#c7a875" stroke-opacity=".42"/>
+  <text x="52" y="924" fill="#eadcc1" font-family="Georgia,serif" font-size="24" letter-spacing="5">PURE SILK · ONYX</text>
+</svg>

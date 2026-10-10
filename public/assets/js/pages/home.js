@@ -4,9 +4,19 @@ import { reconcile } from "../cart.js";
 import { mountCartDrawer } from "../components/CartDrawer.js";
 import { ProductGrid } from "../components/ProductGrid.js";
 import { OrderTracking } from "../components/OrderTracking.js";
+import { CustomerPortal } from "../components/CustomerPortal.js";
+import { ReviewGallery } from "../components/ReviewGallery.js";
+import { Checkout } from "../components/Checkout.js";
+import { AdminPortal } from "../components/AdminPortal.js";
+import { AIChatbot } from "../components/AIChatbot.js";
 
 mountCartDrawer();
 document.getElementById("tracking-root").append(OrderTracking());
+document.getElementById("view-account").replaceChildren(CustomerPortal());
+document.getElementById("view-reviews").replaceChildren(ReviewGallery());
+document.getElementById("view-checkout").replaceChildren(Checkout());
+document.getElementById("view-admin").replaceChildren(AdminPortal());
+document.getElementById("view-home").append(AIChatbot());
 
 const shopRoot = document.getElementById("shop-root");
 const featuredSection = document.getElementById("featured");
@@ -42,9 +52,8 @@ filters.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-category]");
   if (!btn) return;
   activeCategory = btn.dataset.category || null;
-  const url = new URL(location.href);
-  activeCategory ? url.searchParams.set("category", activeCategory) : url.searchParams.delete("category");
-  history.replaceState(null, "", url);
+  const route = activeCategory ? `#/shop?category=${encodeURIComponent(activeCategory)}` : "#/shop";
+  history.replaceState(null, "", route);
   renderShop();
 });
 

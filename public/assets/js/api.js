@@ -1,6 +1,7 @@
 // Single place the frontend talks to the backend. Swap endpoints in config.js.
 import { CONFIG } from "./config.js";
 import { normalizeProduct } from "./product-model.js";
+import { FALLBACK_PRODUCTS } from "./fallback-products.js";
 
 let productsRequest = null;
 
@@ -14,15 +15,21 @@ async function fetchJson(url, options = {}) {
   return res.json();
 }
 
-/** All active products. Accepts either an array or { products: [...] } from the API. */
+function normalizeProductList(data) {
+  const list = Array.isArray(data) ? data : Array.isArray(data?.products) ? data.products : [];
+  return list.map(normalizeProduct).filter((product) => product && product.active);
+}
+
+function fallbackProducts() {
+  return FALLBACK_PRODUCTS.map(normalizeProduct).filter((product) => product && product.active);
+}
+
+/** All active products, falling back to the bundled sample catalogue when the source is unavailable or empty. */
 export async function getProducts({ category, featured } = {}) {
   productsRequest ??= fetchJson(CONFIG.api.products)
-    .then((data) => (Array.isArray(data) ? data : data?.products || []))
-    .then((list) => list.map(normalizeProduct).filter((p) => p && p.active))
-    .catch((err) => {
-      productsRequest = null;
-      throw err;
-    });
+    .then(normalizeProductList)
+    .then((products) => products.length ? products : fallbackProducts())
+    .catch(() => fallbackProducts());
 
   let products = await productsRequest;
   if (category) products = products.filter((p) => p.category === category);
