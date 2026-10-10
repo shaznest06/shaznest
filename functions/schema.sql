@@ -57,12 +57,6 @@ BEGIN
   WHERE id = NEW.customer_id;
 END;
 
-CREATE TRIGGER IF NOT EXISTS award_stamp_after_payment
-AFTER UPDATE OF payment_status ON orders
-WHEN OLD.payment_status != 'paid' AND NEW.payment_status = 'paid' AND OLD.loyalty_stamp_issued = 0
-BEGIN
-  UPDATE orders SET loyalty_stamp_issued = 1 WHERE id = NEW.id;
-END;
 
 CREATE TABLE IF NOT EXISTS reviews (
   id TEXT PRIMARY KEY,

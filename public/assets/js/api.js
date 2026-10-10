@@ -8,7 +8,15 @@ let productsRequest = null;
 async function fetchJson(url, options = {}) {
   const res = await fetch(url, { headers: { Accept: "application/json", ...options.headers }, ...options });
   if (!res.ok) {
-    const err = new Error(`Request failed: ${res.status}`);
+    // Show the server's own message (for example "Only 2 left in stock") when it sends one.
+    let message = `Request failed: ${res.status}`;
+    let fromServer = false;
+    try {
+      const body = await res.clone().json();
+      if (typeof body?.error === "string") { message = body.error; fromServer = true; }
+    } catch {}
+    const err = new Error(message);
+    err.fromServer = fromServer;
     err.status = res.status;
     throw err;
   }
@@ -49,11 +57,18 @@ export async function getProductBySlug(slug) {
  */
 export async function createOrder(payload) {
   if (!CONFIG.features.onlinePayment) return { status: "unavailable" };
-  const order = await fetchJson(CONFIG.api.createOrder, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  let order;
+  try {
+    order = await fetchJson(CONFIG.api.createOrder, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    // Only show messages written by our own server; anything else is a generic outage.
+    if (err.fromServer) throw err;
+    throw new Error("We couldn't reach the order service. No payment was taken. Please try again shortly.");
+  }
   return { status: "created", order };
 }
 

@@ -56,6 +56,9 @@ function loadRazorpayScript() {
 }
 
 function loyaltyStamps() {
+  // Rewards need verified customer accounts and a server-side check; until then never preview a discount.
+  return 0;
+  // eslint-disable-next-line no-unreachable
   const orders = readStored(ORDERS_KEY, []);
   if (!Array.isArray(orders)) return 0;
   return orders.filter((order) => ["delivered", "completed"].includes(String(order?.status || "").toLowerCase())).length;

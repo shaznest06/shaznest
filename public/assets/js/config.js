@@ -7,17 +7,16 @@ export const CONFIG = {
   instagram: { handle: "@shaz.nest", url: "https://www.instagram.com/shaz.nest/" },
 
   api: {
-    // Temporary static catalogue. Later: "/api/v1/products"
-    products: "/data/products.json",
+    // Public catalogue from the database (falls back to the bundled list if unreachable).
+    products: "/api/v1/products",
     createOrder: "/api/v1/orders",
     orderTracking: (orderNumber) => `/api/v1/orders/${encodeURIComponent(orderNumber)}/tracking`,
   },
 
   features: {
-    // Keep false until Razorpay is integrated and verified end to end.
-    onlinePayment: false,
-    // Keep false until GET /api/v1/orders/{orderNumber}/tracking exists.
-    orderTracking: false,
+    // Needs RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET set on the server.
+    onlinePayment: true,
+    orderTracking: true,
   },
 };
 

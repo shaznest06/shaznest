@@ -35,3 +35,22 @@ The D1 schema is designed to work within the Cloudflare free-tier model, subject
 - `GET /api/v1/admin/analytics/live`: authenticated, expiring active counts and recent actions.
 
 Missing D1, admin secret, or R2 bindings return explicit `503` JSON responses. The frontend does not treat unavailable services as successful changes.
+
+## Payments (Razorpay) and orders
+
+Set these as Pages secrets/variables in both Production and Preview:
+
+- `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` (use the `rzp_test_...` pair until you go live). The secret must never appear in browser code.
+- `SHIPPING_FLAT_RUPEES` (optional): a flat delivery charge added to every order. Leave unset for free delivery.
+
+Seed the sample catalogue once (optional): `npx wrangler d1 execute <database-name> --remote --file=functions/seed.sql`.
+If the database was created before this change, also apply `functions/migrations/0004_drop_payment_stamp_trigger.sql`.
+
+Order flow:
+
+- `POST /api/v1/orders`: validates the cart, prices it from the `products` table (browser prices are ignored), creates the Razorpay order and saves a `pending` order. Returns `{ keyId, id, amount, currency, orderNumber }`.
+- `POST /api/v1/payments/verify`: checks Razorpay's HMAC-SHA256 signature of `orderId|paymentId`, marks the order `paid` and reduces stock. Repeating the same verification is safe.
+- `GET /api/v1/orders/{orderNumber}/tracking`: public status of a paid order (no personal details).
+- `GET /api/v1/products`: public active catalogue used by the storefront.
+
+Loyalty rewards are not applied at checkout yet; they need verified customer accounts (`/api/v1/auth/google` and `/api/v1/customer/*` are not implemented).

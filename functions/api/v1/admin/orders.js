@@ -19,7 +19,7 @@ export async function onRequest({ request, env }) {
     if (request.method === "GET") {
       const { results } = await env.DB.prepare(`
          SELECT o.id, o.order_number, o.customer_id, o.items_json, o.total_amount, o.payment_status,
-           o.delivery_status, o.loyalty_stamp_issued, o.created_at,
+           o.delivery_status, o.loyalty_stamp_issued, o.created_at, o.shipping_address_json,
            c.email AS customer_email, c.name AS customer_name, c.address_json AS customer_address
         FROM orders o JOIN customers c ON c.id = o.customer_id
         ORDER BY o.created_at DESC LIMIT 250
@@ -30,7 +30,7 @@ export async function onRequest({ request, env }) {
         customerId: row.customer_id,
         customer: { email: row.customer_email, fullName: row.customer_name },
         customerName: row.customer_name,
-        shippingAddress: parseJson(row.customer_address),
+        shippingAddress: Object.keys(parseJson(row.shipping_address_json)).length ? parseJson(row.shipping_address_json) : parseJson(row.customer_address),
         items: parseItems(row.items_json),
         totalAmount: row.total_amount,
         paymentStatus: row.payment_status,
