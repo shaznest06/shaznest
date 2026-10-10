@@ -15,7 +15,7 @@ export function corsAllowed(request, env) {
   return !origin || allowedOrigins(request, env).has(origin);
 }
 
-function corsHeaders(request, env) {
+function corsHeadersInternal(request, env) {
   const origin = request.headers.get("Origin");
   const headers = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
@@ -30,15 +30,33 @@ function corsHeaders(request, env) {
   return headers;
 }
 
+// Aliases required by orders/create.js and orders/verify.js
+export function corsHeaders(request, env = {}) {
+  return corsHeadersInternal(request, env);
+}
+
+export function jsonResponse(data, status = 200, request = null, env = {}) {
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+    ...(request ? corsHeadersInternal(request, env) : {}),
+  };
+  return new Response(JSON.stringify(data), { status, headers });
+}
+
+export function errorResponse(message, status = 400, request = null, env = {}) {
+  return jsonResponse({ error: message }, status, request, env);
+}
+
 export function empty(request, env, status = 204) {
-  return new Response(null, { status, headers: corsHeaders(request, env) });
+  return new Response(null, { status, headers: corsHeadersInternal(request, env) });
 }
 
 export function json(request, env, data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
-      ...corsHeaders(request, env),
+      ...corsHeadersInternal(request, env),
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
       ...extraHeaders,
@@ -48,7 +66,7 @@ export function json(request, env, data, status = 200, extraHeaders = {}) {
 
 export function options(request, env) {
   if (!corsAllowed(request, env)) return json(request, env, { error: "Origin is not allowed." }, 403);
-  return new Response(null, { status: 204, headers: corsHeaders(request, env) });
+  return new Response(null, { status: 204, headers: corsHeadersInternal(request, env) });
 }
 
 export function rejectOrigin(request, env) {
