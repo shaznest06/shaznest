@@ -1,46 +1,45 @@
-const routeViews = [...document.querySelectorAll("[data-route-view]")];
-const routeNames = new Set(["", "shop", "track", "account", "admin-portal", "admin-login", "checkout", "reviews"]);
-const adminRoutes = new Set(["admin-portal", "admin-login"]);
+import { renderHome } from './pages/home.js';
+import { renderProduct } from './pages/product.js';
+import { CustomerPortal } from './components/CustomerPortal.js';
+import { AdminPortal } from './components/AdminPortal.js';
+import { Checkout } from './components/Checkout.js';
+import { ReviewGallery } from './components/ReviewGallery.js';
 
-function renderRoute() {
-  const hash = window.location.hash;
-  const routeHash = hash.startsWith("#/");
-  const [path = "", query = ""] = routeHash ? hash.slice(2).split("?", 2) : [""];
-  const route = routeNames.has(path) ? path : "";
-  const viewName = adminRoutes.has(route) ? "admin" : ["account", "checkout", "reviews"].includes(route) ? route : "home";
+export function initRouter() {
+  const handleRoute = async () => {
+    const hash = window.location.hash || '#/';
+    const mainContainer = document.querySelector('main') || document.body;
+    
+    // Clear previous view
+    mainContainer.innerHTML = '';
 
-  routeViews.forEach((view) => {
-    const active = view.id === `view-${viewName}`;
-    view.hidden = !active;
-    view.setAttribute("aria-hidden", String(!active));
-    view.classList.toggle("is-active", active);
-    if (view.id === "view-admin") {
-      if (active && adminRoutes.has(route)) view.setAttribute("data-admin-route-active", "true");
-      else view.removeAttribute("data-admin-route-active");
+    if (hash === '#/' || hash === '') {
+      mainContainer.appendChild(renderHome());
+    } else if (hash.startsWith('#/shop/')) {
+      const category = hash.split('/')[2];
+      const homeEl = renderHome();
+      mainContainer.appendChild(homeEl);
+      // Trigger category filter if available on page
+      window.dispatchEvent(new CustomEvent('shaz:filter-category', { detail: { category } }));
+    } else if (hash.startsWith('#/product/')) {
+      const productId = hash.split('/')[2];
+      mainContainer.appendChild(renderProduct(productId));
+    } else if (hash === '#/account') {
+      mainContainer.appendChild(CustomerPortal());
+    } else if (hash === '#/admin' || hash === '#/admin-portal') {
+      mainContainer.appendChild(AdminPortal());
+    } else if (hash === '#/checkout') {
+      mainContainer.appendChild(Checkout());
+    } else if (hash === '#/reviews') {
+      mainContainer.appendChild(ReviewGallery());
+    } else {
+      mainContainer.innerHTML = '<div style="padding: 4rem; text-align: center; color: #d4af37;"><h2>Page Not Found</h2><p>The requested page does not exist in ShaZ Nest.</p><a href="#/" style="color: #fff; text-decoration: underline;">Return Home</a></div>';
     }
-  });
 
-  document.querySelectorAll("[data-route-link]").forEach((link) => {
-    const current = link.getAttribute("href") === hash || (!routeHash && link.getAttribute("href") === "#/");
-    if (current) link.setAttribute("aria-current", "page");
-    else link.removeAttribute("aria-current");
-  });
+    window.scrollTo(0, 0);
+  };
 
-  if (route === "shop") {
-    const category = new URLSearchParams(query).get("category");
-    const filter = [...document.querySelectorAll("#shop-filters [data-category]")]
-      .find((button) => button.dataset.category === (category || ""));
-    if (filter && filter.getAttribute("aria-pressed") !== "true") filter.click();
-  }
-
-  if (route === "shop" || route === "track") {
-    const target = document.getElementById(route === "track" ? "track" : "shop");
-    target?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  } else if (routeHash) {
-    window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  }
+  window.addEventListener('hashchange', handleRoute);
+  window.addEventListener('DOMContentLoaded', handleRoute);
+  handleRoute();
 }
-
-window.addEventListener("hashchange", renderRoute);
-window.addEventListener("popstate", renderRoute);
-window.addEventListener("DOMContentLoaded", renderRoute, { once: true });
