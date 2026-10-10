@@ -11,7 +11,7 @@ let hideTimer = null;
 export function openCart() {
   mountCartDrawer();
   clearTimeout(hideTimer);
-  lastFocus = document.activeElement;
+  if (drawer.root.hidden) lastFocus = document.activeElement;
   drawer.root.hidden = false;
   requestAnimationFrame(() => drawer.root.classList.add("is-open"));
   document.body.classList.add("no-scroll");
@@ -25,7 +25,9 @@ export function closeCart() {
   const done = () => (drawer.root.hidden = true);
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) done();
   else hideTimer = setTimeout(done, 250);
-  lastFocus?.focus?.();
+  const focusTarget = lastFocus;
+  lastFocus = null;
+  focusTarget?.focus?.();
 }
 
 /**
@@ -85,7 +87,30 @@ export function mountCartDrawer() {
     if (e.target.closest("[data-close]")) closeCart();
   });
   root.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeCart();
+    if (e.key === "Escape") {
+      closeCart();
+      return;
+    }
+    if (e.key !== "Tab") return;
+
+    const focusable = [...panel.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter((el) => !el.hidden && el.getAttribute("aria-hidden") !== "true" && el.getClientRects().length);
+    if (!focusable.length) {
+      e.preventDefault();
+      panel.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && (document.activeElement === last || document.activeElement === panel)) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   const render = () => {
