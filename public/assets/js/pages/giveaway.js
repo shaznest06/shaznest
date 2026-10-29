@@ -128,6 +128,17 @@ export function renderGiveawayPage(container) {
         </div>
       </div>
 
+      <!-- VIP Verified Entrants Marquee -->
+        <div class="participants-ticker-wrap">
+        <div class="ticker-badge">VERIFIED ENTRANTS</div>
+        <div class="ticker-track-container">
+            <div class="ticker-track">
+            <!-- Handles populated via JS -->
+            ${participants.concat(participants).map(handle => `<span class="ticker-handle">${handle}</span>`).join('')}
+            </div>
+        </div>
+        </div>
+
       <!-- STAGE AREA (Hides smoothly once ceremony completes) -->
       <div id="giveaway-stage" class="giveaway-stage">
         

@@ -1218,3 +1218,66 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   color: #ffffff;
   padding: 0 4px;
 }
+
+/* Continuous Participant Marquee */
+.participants-ticker-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(223, 177, 91, 0.25);
+  border-radius: 999px;
+  margin: 1.5rem 0 2rem;
+  padding: 4px 6px;
+  overflow: hidden;
+}
+
+.ticker-badge {
+  background: #dfb15b;
+  color: #0d1512;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.ticker-track-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.ticker-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: smoothScrollTicker 45s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused; /* Pauses when user taps/hovers to check their name */
+}
+
+.ticker-handle {
+  display: inline-block;
+  padding: 0 14px;
+  color: #cbd5e0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.ticker-handle::after {
+  content: "•";
+  margin-left: 14px;
+  color: #dfb15b;
+  opacity: 0.6;
+}
+
+@keyframes smoothScrollTicker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
