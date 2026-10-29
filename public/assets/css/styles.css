@@ -1206,3 +1206,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
 @keyframes goldDrop {
   to { transform: translateY(800px) rotate(360deg); opacity: 0; }
 }
+
+.slot-item.placeholder-cover {
+  color: #dfb15b;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: rgba(223, 177, 91, 0.08);
+}
+.slot-item.placeholder-cover span {
+  color: #ffffff;
+  padding: 0 4px;
+}

@@ -209,6 +209,13 @@ export function renderGiveawayPage(container) {
   function buildReel(items) {
     if (!slotStrip) return;
     slotStrip.innerHTML = '';
+
+    // Placeholder resting card shown at index 0 before the draw starts
+    const initialCover = document.createElement('div');
+    initialCover.className = 'slot-item placeholder-cover';
+    initialCover.innerHTML = '✨ <span>LUCKY REEL</span> ✨';
+    slotStrip.appendChild(initialCover);
+
     const repeated = [...items, ...items, ...items, ...items];
     repeated.forEach((handle) => {
       const el = document.createElement('div');
@@ -227,7 +234,8 @@ export function renderGiveawayPage(container) {
       const idx = pool.indexOf(targetWinner);
       const safeIdx = idx !== -1 ? idx : 0;
 
-      const targetIndex = (pool.length * 2) + safeIdx;
+      // 1 (placeholder cover) + (pool.length * 2) + safeIdx
+      const targetIndex = 1 + (pool.length * 2) + safeIdx;
       const targetY = -(targetIndex * ITEM_HEIGHT);
 
       slotStrip.style.transition = `transform ${durationMs}ms cubic-bezier(0.12, 0.8, 0.18, 1)`;
