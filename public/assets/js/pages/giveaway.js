@@ -1,7 +1,7 @@
 /**
  * ShazNest Grand Giveaway Live Reveal
+ * Atomic Time Synchronized + Zero-Flash Render
  * 100% Automated Ceremony at 10:00 PM IST
- * 3 Winners: 1 Effort + 2 Reel Spins -> Seamless Final Podium Transition
  * Route: #giveaway
  */
 
@@ -51,11 +51,45 @@ function getTonight10PmISTTimestamp() {
   return new Date(`${year}-${month}-${day}T22:00:00+05:30`).getTime();
 }
 
-// Module-level interval handle to prevent duplicate timers when navigating
+// Global server-time offset in ms (deviceTime + serverOffset = true atomic time)
+let serverTimeOffsetMs = 0;
+let hasSyncedServerTime = false;
+
+async function syncWithServerClock() {
+  if (hasSyncedServerTime) return;
+  try {
+    const t0 = Date.now();
+    // Head request to any lightweight endpoint to read Cloudflare's server Date header
+    const resp = await fetch('/api/v1/products', { method: 'HEAD', cache: 'no-store' });
+    const serverDateStr = resp.headers.get('Date');
+    if (serverDateStr) {
+      const t1 = Date.now();
+      const roundTripLatency = (t1 - t0) / 2;
+      const serverUtc = new Date(serverDateStr).getTime() + roundTripLatency;
+      serverTimeOffsetMs = serverUtc - Date.now();
+      hasSyncedServerTime = true;
+    }
+  } catch {
+    // If offline or request fails, falls back gracefully to device clock
+  }
+}
+
+function getCorrectedNow() {
+  return Date.now() + serverTimeOffsetMs;
+}
+
+function getInitialTimeRemaining(targetTimestamp) {
+  const diff = Math.max(0, targetTimestamp - getCorrectedNow());
+  return {
+    hours: String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0'),
+    mins: String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0'),
+    secs: String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0')
+  };
+}
+
 let giveawayTimerInterval = null;
 
 export function renderGiveawayPage(container) {
-  // Clear any running countdown if user navigated away and returned
   if (giveawayTimerInterval) {
     clearInterval(giveawayTimerInterval);
     giveawayTimerInterval = null;
@@ -63,6 +97,9 @@ export function renderGiveawayPage(container) {
 
   const { effortWinner, spinWinner1, spinWinner2, participants } = GIVEAWAY_CONFIG;
   const targetTimestamp = getTonight10PmISTTimestamp();
+
+  // Pre-calculate exact digits before innerHTML to prevent the '00' flash
+  const initial = getInitialTimeRemaining(targetTimestamp);
 
   container.innerHTML = `
     <div class="grand-giveaway-container">
@@ -83,11 +120,11 @@ export function renderGiveawayPage(container) {
       <div id="giveaway-timer-box" class="royal-timer-box">
         <p class="timer-headline">AUTOMATED CEREMONY COMMENCES AT 10:00 PM IST</p>
         <div class="timer-digits">
-          <div class="digit-col"><span id="cd-hours">00</span><label>Hours</label></div>
+          <div class="digit-col"><span id="cd-hours">${initial.hours}</span><label>Hours</label></div>
           <div class="digit-divider">:</div>
-          <div class="digit-col"><span id="cd-mins">00</span><label>Minutes</label></div>
+          <div class="digit-col"><span id="cd-mins">${initial.mins}</span><label>Minutes</label></div>
           <div class="digit-divider">:</div>
-          <div class="digit-col"><span id="cd-secs">00</span><label>Seconds</label></div>
+          <div class="digit-col"><span id="cd-secs">${initial.secs}</span><label>Seconds</label></div>
         </div>
       </div>
 
@@ -169,7 +206,6 @@ export function renderGiveawayPage(container) {
 
   const ITEM_HEIGHT = 60;
 
-  // Build 4x looped list to support rolling animation
   function buildReel(items) {
     if (!slotStrip) return;
     slotStrip.innerHTML = '';
@@ -184,7 +220,6 @@ export function renderGiveawayPage(container) {
 
   buildReel(participants);
 
-  // Smooth roll execution
   function rollToWinner(targetWinner, durationMs = 5200) {
     return new Promise((resolve) => {
       if (!slotStrip) return resolve();
@@ -192,7 +227,6 @@ export function renderGiveawayPage(container) {
       const idx = pool.indexOf(targetWinner);
       const safeIdx = idx !== -1 ? idx : 0;
 
-      // Target item in the 3rd repeated loop for suspense
       const targetIndex = (pool.length * 2) + safeIdx;
       const targetY = -(targetIndex * ITEM_HEIGHT);
 
@@ -206,13 +240,11 @@ export function renderGiveawayPage(container) {
     });
   }
 
-  // Automated Sequential Ceremony Orchestrator
   let ceremonyStarted = false;
   async function startAutomatedCeremony() {
     if (ceremonyStarted) return;
     ceremonyStarted = true;
 
-    // 1. Reveal Effort Winner
     if (effortLockShield) effortLockShield.style.display = 'none';
     if (effortCard) {
       effortCard.classList.remove('locked-state');
@@ -222,19 +254,15 @@ export function renderGiveawayPage(container) {
     if (reelBadge) reelBadge.innerText = 'LUCKY DRAW · SELECTING WINNER #2...';
     if (reelStatus) reelStatus.innerText = 'Reel spinning now for Winner #2...';
 
-    // 2. Short dramatic pause before Spin 1
     await new Promise(r => setTimeout(r, 2000));
 
-    // 3. Roll for Winner #2
     await rollToWinner(spinWinner1);
     if (reelStatus) {
       reelStatus.innerHTML = `🎉 Winner #2 Selected: <strong style="color: #dfb15b;">${spinWinner1}</strong>!`;
     }
 
-    // 4. Pause for audience reaction
     await new Promise(r => setTimeout(r, 3500));
 
-    // 5. Reset Reel silently for Winner #3
     if (slotStrip) {
       slotStrip.style.transition = 'none';
       slotStrip.style.transform = 'translateY(0px)';
@@ -244,16 +272,13 @@ export function renderGiveawayPage(container) {
 
     await new Promise(r => setTimeout(r, 1000));
 
-    // 6. Roll for Winner #3
     await rollToWinner(spinWinner2);
     if (reelStatus) {
       reelStatus.innerHTML = `🎉 Winner #3 Selected: <strong style="color: #dfb15b;">${spinWinner2}</strong>!`;
     }
 
-    // 7. Pause to celebrate
     await new Promise(r => setTimeout(r, 3500));
 
-    // 8. Transform Screen: Fade out stage and reveal the Grand 3-Winner Podium
     if (stage) stage.classList.add('fade-out');
     setTimeout(() => {
       if (stage) stage.style.display = 'none';
@@ -265,13 +290,15 @@ export function renderGiveawayPage(container) {
     }, 600);
   }
 
-  // Timer loop
-  giveawayTimerInterval = setInterval(() => {
-    const diff = targetTimestamp - Date.now();
+  // Timer Tick Function
+  function updateTimerDisplay() {
+    const diff = targetTimestamp - getCorrectedNow();
 
     if (diff <= 0) {
-      clearInterval(giveawayTimerInterval);
-      giveawayTimerInterval = null;
+      if (giveawayTimerInterval) {
+        clearInterval(giveawayTimerInterval);
+        giveawayTimerInterval = null;
+      }
       
       const timerBox = document.getElementById('giveaway-timer-box');
       if (timerBox) {
@@ -295,7 +322,15 @@ export function renderGiveawayPage(container) {
         elSecs.textContent = String(secs).padStart(2, '0');
       }
     }
-  }, 1000);
+  }
+
+  // Immediately render current time, sync clock in background, and start interval
+  updateTimerDisplay();
+  giveawayTimerInterval = setInterval(updateTimerDisplay, 1000);
+
+  syncWithServerClock().then(() => {
+    updateTimerDisplay();
+  });
 }
 
 function spawnGoldenConfetti() {
