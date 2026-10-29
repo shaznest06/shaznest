@@ -1,5 +1,7 @@
 // Hash router for the single-page storefront (index.html).
 // The page already contains every view; this only shows the right one.
+import { renderGiveawayPage } from './pages/giveaway.js';
+
 const VIEWS = {
   account: "view-account",
   checkout: "view-checkout",
@@ -7,7 +9,9 @@ const VIEWS = {
   "admin-portal": "view-admin",
   "admin-login": "view-admin",
   admin: "view-admin",
+  giveaway: "view-giveaway",
 };
+
 const HOME = "view-home";
 const SCROLL_TARGETS = { shop: "shop", track: "track" };
 const CATEGORIES = ["hijabs", "accessories"];
@@ -34,6 +38,16 @@ function handleRoute() {
   const viewId = VIEWS[path] || HOME;
   showView(viewId);
 
+  // If visiting the giveaway route, render the interactive wheel
+  if (path === "giveaway") {
+    window.scrollTo(0, 0);
+    const giveawayContainer = document.getElementById("giveaway-root");
+    if (giveawayContainer) {
+      renderGiveawayPage(giveawayContainer);
+    }
+    return;
+  }
+
   if (viewId !== HOME) {
     window.scrollTo(0, 0);
     return;
@@ -48,7 +62,6 @@ function handleRoute() {
   if (target) {
     document.getElementById(target)?.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth" });
   } else if (!path || path === "") {
-    // "#/" or empty hash: top of the page. Plain in-page anchors (#shop, #track) scroll natively.
     if (location.hash === "#/" || location.hash === "") window.scrollTo(0, 0);
   }
 }
