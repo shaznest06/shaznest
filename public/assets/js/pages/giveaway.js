@@ -1,24 +1,20 @@
 /**
  * ShazNest Grand Giveaway Live Reveal
  * Atomic Time Synchronized + Zero-Flash Render
+ * Synchronized Deterministic Randomness (Identical on all devices)
  * 100% Automated Ceremony at 10:00 PM IST
  * Route: #giveaway
  */
-
 
 // ==========================================
 // ⚙️ GIVEAWAY CONFIGURATION
 // ==========================================
 export const GIVEAWAY_CONFIG = {
-  // Winner 1: Best Effort / Engagement
+  // Winner 1: Best Effort / Engagement (Update this handle before 10:00 PM)
   effortWinner: {
-    handle: '@replace_with_effort_winner',
+    handle: '@winner_effort',
     reason: 'Awarded for active engagement, thoughtful comments, and sharing our launch!'
   },
-
-  // Winners 2 & 3: Selected via the Grand Raffle Reel
-  spinWinner1: '@replace_with_spin_winner_1',
-  spinWinner2: '@replace_with_spin_winner_2',
 
   // Master Participant List (All 30 Verified Entrants)
   participants: [
@@ -51,11 +47,38 @@ export const GIVEAWAY_CONFIG = {
     '@sm48697',
     '@shaikhsalmashahid',
     '@radha_subramaniam2',
-    '@_bis_mi_02',
-    'firdose_2911'
+    '@_bis_mi_02'
   ]
 };
 
+// Seeded PRNG to ensure the random picks are 100% identical on every follower's phone
+function getSynchronizedRandomWinners(participants, excludeHandle) {
+  const seedString = "SHAZNEST-GRAND-GIVEAWAY-NIGHT-2026";
+  let seed = 0;
+  for (let i = 0; i < seedString.length; i++) {
+    seed = (seed << 5) - seed + seedString.charCodeAt(i);
+    seed |= 0;
+  }
+
+  function seededRandom() {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+
+  // Filter out the effort winner so they cannot win twice
+  const pool = participants.filter((h) => h.toLowerCase() !== excludeHandle.toLowerCase());
+
+  const idx1 = Math.floor(seededRandom() * pool.length);
+  const win1 = pool[idx1];
+
+  const remainingPool = pool.filter((h) => h !== win1);
+  const idx2 = Math.floor(seededRandom() * remainingPool.length);
+  const win2 = remainingPool[idx2];
+
+  return { spinWinner1: win1, spinWinner2: win2 };
+}
 
 // Strict 10:00 PM IST (UTC+05:30) Target Timestamp
 function getTonight10PmISTTimestamp() {
@@ -82,7 +105,6 @@ async function syncWithServerClock() {
   if (hasSyncedServerTime) return;
   try {
     const t0 = Date.now();
-    // Head request to any lightweight endpoint to read Cloudflare's server Date header
     const resp = await fetch('/api/v1/products', { method: 'HEAD', cache: 'no-store' });
     const serverDateStr = resp.headers.get('Date');
     if (serverDateStr) {
@@ -118,10 +140,11 @@ export function renderGiveawayPage(container) {
     giveawayTimerInterval = null;
   }
 
-  const { effortWinner, spinWinner1, spinWinner2, participants } = GIVEAWAY_CONFIG;
-  const targetTimestamp = getTonight10PmISTTimestamp();
+  const { effortWinner, participants } = GIVEAWAY_CONFIG;
+  // Calculate the 2 randomized winners synchronously
+  const { spinWinner1, spinWinner2 } = getSynchronizedRandomWinners(participants, effortWinner.handle);
 
-  // Pre-calculate exact digits before innerHTML to prevent the '00' flash
+  const targetTimestamp = getTonight10PmISTTimestamp();
   const initial = getInitialTimeRemaining(targetTimestamp);
 
   container.innerHTML = `
@@ -152,15 +175,14 @@ export function renderGiveawayPage(container) {
       </div>
 
       <!-- VIP Verified Entrants Marquee -->
-        <div class="participants-ticker-wrap">
+      <div class="participants-ticker-wrap">
         <div class="ticker-badge">VERIFIED ENTRANTS</div>
         <div class="ticker-track-container">
-            <div class="ticker-track">
-            <!-- Handles populated via JS -->
+          <div class="ticker-track">
             ${participants.concat(participants).map(handle => `<span class="ticker-handle">${handle}</span>`).join('')}
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
 
       <!-- STAGE AREA (Hides smoothly once ceremony completes) -->
       <div id="giveaway-stage" class="giveaway-stage">
@@ -244,7 +266,6 @@ export function renderGiveawayPage(container) {
     if (!slotStrip) return;
     slotStrip.innerHTML = '';
 
-    // Placeholder resting card shown at index 0 before the draw starts
     const initialCover = document.createElement('div');
     initialCover.className = 'slot-item placeholder-cover';
     initialCover.innerHTML = '✨ <span>LUCKY REEL</span> ✨';
@@ -268,7 +289,6 @@ export function renderGiveawayPage(container) {
       const idx = pool.indexOf(targetWinner);
       const safeIdx = idx !== -1 ? idx : 0;
 
-      // 1 (placeholder cover) + (pool.length * 2) + safeIdx
       const targetIndex = 1 + (pool.length * 2) + safeIdx;
       const targetY = -(targetIndex * ITEM_HEIGHT);
 
@@ -287,6 +307,7 @@ export function renderGiveawayPage(container) {
     if (ceremonyStarted) return;
     ceremonyStarted = true;
 
+    // 1. Reveal Effort Winner
     if (effortLockShield) effortLockShield.style.display = 'none';
     if (effortCard) {
       effortCard.classList.remove('locked-state');
@@ -298,6 +319,7 @@ export function renderGiveawayPage(container) {
 
     await new Promise(r => setTimeout(r, 2000));
 
+    // 2. Roll for Random Spin Winner 1
     await rollToWinner(spinWinner1);
     if (reelStatus) {
       reelStatus.innerHTML = `🎉 Winner #2 Selected: <strong style="color: #dfb15b;">${spinWinner1}</strong>!`;
@@ -305,6 +327,7 @@ export function renderGiveawayPage(container) {
 
     await new Promise(r => setTimeout(r, 3500));
 
+    // 3. Reset Reel silently for Winner #3
     if (slotStrip) {
       slotStrip.style.transition = 'none';
       slotStrip.style.transform = 'translateY(0px)';
@@ -314,6 +337,7 @@ export function renderGiveawayPage(container) {
 
     await new Promise(r => setTimeout(r, 1000));
 
+    // 4. Roll for Random Spin Winner 2
     await rollToWinner(spinWinner2);
     if (reelStatus) {
       reelStatus.innerHTML = `🎉 Winner #3 Selected: <strong style="color: #dfb15b;">${spinWinner2}</strong>!`;
@@ -321,6 +345,7 @@ export function renderGiveawayPage(container) {
 
     await new Promise(r => setTimeout(r, 3500));
 
+    // 5. Transform Screen: Fade out stage and reveal the Grand 3-Winner Podium
     if (stage) stage.classList.add('fade-out');
     setTimeout(() => {
       if (stage) stage.style.display = 'none';
@@ -366,7 +391,6 @@ export function renderGiveawayPage(container) {
     }
   }
 
-  // Immediately render current time, sync clock in background, and start interval
   updateTimerDisplay();
   giveawayTimerInterval = setInterval(updateTimerDisplay, 1000);
 
