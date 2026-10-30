@@ -48,8 +48,8 @@ export const GIVEAWAY_CONFIG = {
     '@shaikhsalmashahid',
     '@radha_subramaniam2',
     '@_bis_mi_02',
-    'firdose_2911',
-    '_ jumanah.parveen_'
+    '@firdose_2911',
+    '@_jumanah.parveen_'
   ]
 };
 
