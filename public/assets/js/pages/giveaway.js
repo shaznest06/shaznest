@@ -221,10 +221,11 @@ export function renderGiveawayPage(container) {
         <h2 class="podium-title">Congratulations to Our 3 Winners!</h2>
         <p class="podium-sub">Thank you to everyone who participated in our community launch giveaway.</p>
 
-        <div class="podium-grid">
+         <div class="podium-grid">
           <!-- Winner 1 -->
           <div class="podium-card gold-glow">
             <span class="p-rank">🏆 Winner #1 (Effort)</span>
+            <div style="color: #dfb15b; font-size: 0.8rem; font-weight: 700; margin: 4px 0;">🎁 THE HIJAB COMBO</div>
             <h3 class="p-name">${effortWinner.handle}</h3>
             <p class="p-note">Community Champion</p>
           </div>
@@ -232,17 +233,20 @@ export function renderGiveawayPage(container) {
           <!-- Winner 2 -->
           <div class="podium-card gold-glow highlight">
             <span class="p-rank">✨ Winner #2 (Spin 1)</span>
+            <div style="color: #dfb15b; font-size: 0.8rem; font-weight: 700; margin: 4px 0;">🎁 THE ACCESSORIES SET</div>
             <h3 class="p-name" id="final-spin-1">${spinWinner1}</h3>
-            <p class="p-note">Luxury Draw Winner</p>
+            <p class="p-note">Lucky Draw Winner</p>
           </div>
 
           <!-- Winner 3 -->
           <div class="podium-card gold-glow">
             <span class="p-rank">✨ Winner #3 (Spin 2)</span>
+            <div style="color: #dfb15b; font-size: 0.8rem; font-weight: 700; margin: 4px 0;">🎁 THE DIY PAINTING KIT</div>
             <h3 class="p-name" id="final-spin-2">${spinWinner2}</h3>
-            <p class="p-note">Luxury Draw Winner</p>
+            <p class="p-note">Lucky Draw Winner</p>
           </div>
         </div>
+
 
         <div class="claim-card">
           <h4>How to Claim Your Luxury Hamper:</h4>
