@@ -5,34 +5,56 @@
  * Route: #giveaway
  */
 
+
 // ==========================================
-// ⚙️ GIVEAWAY CONFIGURATION (UPDATE WHEN READY)
+// ⚙️ GIVEAWAY CONFIGURATION
 // ==========================================
 export const GIVEAWAY_CONFIG = {
   // Winner 1: Best Effort / Engagement
   effortWinner: {
-    handle: '@fatima_active',
+    handle: '@replace_with_effort_winner',
     reason: 'Awarded for active engagement, thoughtful comments, and sharing our launch!'
   },
 
   // Winners 2 & 3: Selected via the Grand Raffle Reel
-  spinWinner1: '@mariam_dxb',
-  spinWinner2: '@zoya_hijabstyle',
+  spinWinner1: '@replace_with_spin_winner_1',
+  spinWinner2: '@replace_with_spin_winner_2',
 
-  // Master Participant List (paste all handles here)
+  // Master Participant List (All 30 Verified Entrants)
   participants: [
-    '@ayesha_k', '@mariam_dxb', '@sana_style', '@zoya_hijabstyle', '@nazia_trends',
-    '@fatima_active', '@huda_collection', '@amira_dxb', '@noor_fashion', '@zahra_boutique',
-    '@yasmin_hijabs', '@bushra_official', '@alina_trends', '@sumayya_art', '@safiya_daily',
-    '@rehana_chic', '@farida_modest', '@kainat_lookbook', '@mehak_vlogs', '@tanzeem_glow',
-    '@uzma_style', '@rizwana_jewels', '@shaheen_drapes', '@saleha_gems', '@anisa_nest',
-    '@asma_modesty', '@fauzia_looks', '@habiba_couture', '@iqra_lifestyle', '@jameela_fab',
-    '@kalsoom_vibe', '@lubna_couture', '@munira_hijabs', '@naheed_wear', '@parveen_silks',
-    '@qirat_collection', '@rubina_creations', '@shabana_luxury', '@tahira_exclusive', '@wahida_grace',
-    '@yusra_sparkle', '@zeenat_couture', '@arifa_grace', '@bilquis_elegance', '@chahat_drapes',
-    '@dilshad_looks', '@erum_chic', '@feroza_modesty', '@gulshan_vogue', '@hajra_pure'
+    '@Syeda_kulsum1542',
+    '@raifarahman12',
+    '@rizwanazu_jalal',
+    '@ayesha_6_66',
+    '@crush_on_red_blue',
+    '@fas_zafi_',
+    '@fahmi._f',
+    '@medico_student_',
+    '@andleeb424',
+    '@rifaya_irsath',
+    '@suh.xana',
+    '@ugcbyzhra',
+    '@littlelazyloopz.andmore',
+    '@shaazna06',
+    '@ugc_girl_07',
+    '@lumora_invites',
+    '@thasleafzii',
+    '@littlehearts9999',
+    '@zainabbb_09',
+    '@tm_kin_17',
+    '@yasmin_nasar_',
+    '@farheen_1105',
+    '@hb_zarru_2007',
+    '@self.care356',
+    '@mrsfaizan1094',
+    '@haji_mohamed_02_',
+    '@sm48697',
+    '@shaikhsalmashahid',
+    '@radha_subramaniam2',
+    '@_bis_mi_02'
   ]
 };
+
 
 // Strict 10:00 PM IST (UTC+05:30) Target Timestamp
 function getTonight10PmISTTimestamp() {
