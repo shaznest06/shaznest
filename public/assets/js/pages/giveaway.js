@@ -24,7 +24,6 @@ export const GIVEAWAY_CONFIG = {
     '@ayesha_6_66',
     '@crush_on_red_blue',
     '@fas_zafi_',
-    '@fahmi._f',
     '@medico_student_',
     '@andleeb424',
     '@rifaya_irsath',
