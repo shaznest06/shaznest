@@ -88,7 +88,7 @@ export function renderGiveawayPage(container) {
           <div class="podium-card gold-glow highlight">
             <span class="p-rank">✨ Winner #2 (Spin 1)</span>
             <div style="color: #dfb15b; font-size: 0.8rem; font-weight: 700; margin: 4px 0;">🎁 THE ACCESSORIES SET</div>
-            <h3 class="p-name">${spinWinner1}</h3>
+            <h3 class="p-name" id="final-spin-1">${spinWinner1}</h3>
             <p class="p-note">Lucky Draw Winner</p>
           </div>
 
@@ -96,7 +96,7 @@ export function renderGiveawayPage(container) {
           <div class="podium-card gold-glow">
             <span class="p-rank">✨ Winner #3 (Spin 2)</span>
             <div style="color: #dfb15b; font-size: 0.8rem; font-weight: 700; margin: 4px 0;">🎁 THE DIY PAINTING KIT</div>
-            <h3 class="p-name">${spinWinner2}</h3>
+            <h3 class="p-name" id="final-spin-2">${spinWinner2}</h3>
             <p class="p-note">Lucky Draw Winner</p>
           </div>
         </div>
