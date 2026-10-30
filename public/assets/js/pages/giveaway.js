@@ -158,7 +158,7 @@ export function renderGiveawayPage(container) {
       <div class="grand-header">
         <div class="royal-tag">SHAZNEST EXCLUSIVE</div>
         <h1 class="grand-title">Grand Giveaway Reveal</h1>
-        <p class="grand-tagline">3 Luxury Hijab Gift Hampers for our Instagram family</p>
+        <p class="grand-tagline">3 Exclusive Gifts: Hijab Combo · Accessories Set · DIY Painting Kit</p>
         <div class="participant-counter-pill">
           ✨ <strong>${participants.length}</strong> Verified Entrants in Tonight's Ceremony
         </div>
