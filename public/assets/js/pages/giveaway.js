@@ -10,7 +10,7 @@
 // ⚙️ GIVEAWAY CONFIGURATION
 // ==========================================
 export const GIVEAWAY_CONFIG = {
-  // Winner 1: Best Effort / Engagement (Update this handle before 10:00 PM)
+  // Winner 1: Best Effort / Engagement
   effortWinner: {
     handle: '@Fahmi._f',
     reason: 'Awarded for active engagement, thoughtful comments, and sharing our launch!'
