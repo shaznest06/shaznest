@@ -1281,3 +1281,55 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* =========================================================
+   MOBILE RESPONSIVE FIXES (HEADER & HERO BANNER)
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* 1. Header scroll and spacing fix */
+  header, .site-header, nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide scrollbar for clean luxury look */
+  }
+  header::-webkit-scrollbar, .site-header::-webkit-scrollbar, nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link, nav a {
+    font-size: 0.75rem !important;
+    white-space: nowrap !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+
+  .giveaway-pill {
+    font-size: 0.75rem !important;
+    padding: 2px 8px !important;
+    border-radius: 999px;
+    background: rgba(223, 177, 91, 0.12);
+    border: 1px solid rgba(223, 177, 91, 0.3);
+  }
+
+  /* 2. Seamless Homepage Giveaway Banner */
+  .grand-giveaway-hero-card {
+    margin: 0.75rem 0.75rem 1.25rem !important;
+    padding: 1.25rem 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  .grand-giveaway-hero-card h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .grand-giveaway-hero-card p {
+    font-size: 0.82rem !important;
+    margin: 0.25rem 0 0.85rem !important;
+  }
+
+  .btn-gold-glow {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 1.25rem !important;
+  }
+}
