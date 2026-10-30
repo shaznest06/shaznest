@@ -16,7 +16,7 @@ export const GIVEAWAY_CONFIG = {
     reason: 'Awarded for active engagement, thoughtful comments, and sharing our launch!'
   },
 
-  // Master Participant List (All 30 Verified Entrants)
+  // Master Participant List (All 31 Verified Entrants)
   participants: [
     '@Syeda_kulsum1542',
     '@raifarahman12',
